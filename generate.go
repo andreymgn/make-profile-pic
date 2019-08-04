@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"image/draw"
 	"image/png"
+	"log"
 	"math/rand"
 	"os"
 )
@@ -71,7 +72,10 @@ func (a *Avatar) draw(filename string) {
 			draw.Draw(img, square, &image.Uniform{color}, image.ZP, draw.Src)
 		}
 	}
-	f, _ := os.Create(filename)
+	f, err := os.Create(filename)
+	if err != nil {
+		log.Fatal("error while creating file: ", err)
+	}
 	png.Encode(f, img)
 }
 
